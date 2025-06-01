@@ -10,9 +10,7 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
 
-        if (!validateInformation()) {
-            throw new IllegalArgumentException("Invalid user information.");
-        }
+        validateInformation();
     }
 
     public User(String name, String password, String email) {
@@ -20,18 +18,14 @@ public class User {
         this.password = password;
         this.email = email;
 
-        if (!validateInformation()) {
-            throw new IllegalArgumentException("Invalid user information.");
-        }
+        validateInformation();
     }
 
     public User(String name, String password) {
         this.name = name;
         this.password = password;
 
-        if (!validateInformation()) {
-            throw new IllegalArgumentException("Invalid user information.");
-        }
+        validateInformation();
     }
 
     //getters
@@ -81,15 +75,15 @@ public class User {
         return toPrint;
     }
 
-    public boolean validateInformation(){
+    private void validateInformation(){
 
         if (email != null && !email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
-            System.out.println("Invalid email address");
-            return false;
+            throw new IllegalArgumentException("Invalid email address for " + name);
         } else if(name.length() <= 2 || name.length() >= 12 || Character.isLowerCase(name.charAt(0))) {
-            System.out.println("Give a valid username, 2-12 letters/numbers and capital first letter");
-            return false;
+            throw new IllegalArgumentException(name + " please enter a valid username, 2-12 letters/numbers and capital first letter");
+        } else {
+            System.out.println("User: " + name + " has been successfully created \n");
+
         }
-            else return true;
     }
 }
